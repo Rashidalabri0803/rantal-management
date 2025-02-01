@@ -10,19 +10,20 @@ class Migration(migrations.Migration):
     initial = True
 
     dependencies = [
+        ('leases', '0001_initial'),
         ('properties', '0001_initial'),
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='property',
-            name='manager',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, to=settings.AUTH_USER_MODEL),
+            model_name='lease',
+            name='tenant',
+            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL),
         ),
         migrations.AddField(
-            model_name='unit',
-            name='property',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='properties.property'),
+            model_name='lease',
+            name='unit',
+            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='properties.unit'),
         ),
     ]

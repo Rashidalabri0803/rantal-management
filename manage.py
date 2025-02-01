@@ -6,7 +6,7 @@ import webbrowser
 
 def main():
     """Run administrative tasks."""
-    os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'rental_management.settings')
+    os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'config.settings')
     try:
         from django.core.management import execute_from_command_line
     except ImportError as exc:
@@ -16,7 +16,7 @@ def main():
             "forget to activate a virtual environment?"
         ) from exc
     #webbrowser.open('http://localhost:8000')
-    execute_from_command_line(sys.argv)# + ['runserver' ,'0.0.0.0:8000', '--noreload'])
+    execute_from_command_line(sys.argv)# + ['runserver', '0.0.0.0:8000', '--noreload'])
 
 
 if __name__ == '__main__':

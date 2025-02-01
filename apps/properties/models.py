@@ -1,39 +1,39 @@
 from django.db import models
-from users.models import CustomUser
+from apps.users.models import User
 
 class Property(models.Model):
-  TYPE_CHOICES = [
-    ('apartment', 'شقة'),
-    ('office', 'مكتب'),
-    ('shop', 'محل'),
+  STATUS_CHOICES = [
+    ('available', 'متاح'),
+    ('unavailable', 'غير متاح'),
+    ('under_maintenance', 'تحت الصيانة')
   ]
-  name = models.CharField(max_length=100)
-  property_type = models.CharField(max_length=10, choices=TYPE_CHOICES)
-  location = models.CharField(max_length=255, blank=True, null=True)
-  image = models.ImageField(upload_to='properties/', blank=True, null=True)
+
+  name = models.CharField(max_length=255)
+  address = models.TextField()
+  description = models.TextField(blank=True, null=True)
+  cr_number = models.CharField(max_length=20, blank=True, null=True)
+  manager = models.ForeignKey(User, on_delete=models.SET_NULL, blank=True, null=True)
+  image = models.ImageField(upload_to='properties', blank=True, null=True)
+  documents = models.FileField(upload_to='properties_docs', blank=True, null=True)
+  status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='available')
 
   def __str__(self):
     return self.name
 
-class Lease(models.Model):
-  STATUS_CHOICES = (
-    ('active', 'ساري'),
-    ('expired', 'منتهي'),
-    ('cancelled', 'ملغى'),
-  )
-  PAYMENT_METHODS = (
-    ('bank_transfer', 'تحويل بنكي'),
-    ('cash', 'كاش'),
-    ('credit_card', 'بطاقة ائتمانية'),
-  )
-  property = models.OneToOneField(Property, on_delete=models.CASCADE)
-  tenant = models.ForeignKey(CustomUser, on_delete=models.CASCADE, limit_choices_to={'role': 'tenant'})
-  rent_amount = models.DecimalField(max_digits=10, decimal_places=2)
-  start_date = models.DateField()
-  end_date = models.DateField()
-  status = models.CharField(max_length=10, choices=STATUS_CHOICES, default='active')
-  security_deposit = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
-  payment_method = models.CharField(max_length=20, choices=PAYMENT_METHODS, default='bank_transfer')
+class Unit(models.Model):
+  UNIT_TYPE_CHOICES = [
+    ('apartment', 'شقة'),
+    ('office', 'مكتب'),
+    ('shop', 'محل'),
+  ]
+
+  property = models.ForeignKey('properties.Property', on_delete=models.CASCADE)
+  unit_type = models.CharField(max_length=10, choices=UNIT_TYPE_CHOICES)
+  rent_price = models.DecimalField(max_digits=10, decimal_places=2)
+  is_furnished = models.BooleanField(default=False)
+  before_images = models.ImageField(upload_to='units/before/', blank=True, null=True)
+  after_images = models.ImageField(upload_to='units/after/', blank=True, null=True)
+  last_updated = models.DateTimeField(auto_now=True)
 
   def __str__(self):
-    return f"{self.property.name} - {self.tenant.username}"
+    return f"{self.get_unit_type_display()} - {self.property.name}"
