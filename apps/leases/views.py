@@ -2,8 +2,9 @@ from django.contrib import messages
 from django.http import HttpResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.template.loader import render_to_string
-from weasyprint import HTML
 from tinycss2.color4 import parse_color
+from weasyprint import HTML
+
 from .forms import LeaseForm
 from .models import Lease
 
@@ -32,7 +33,8 @@ def generate_lease_pdf(request, lease_id):
     context = {'lease': lease}
     html_context = render_to_string('leases/lease_template.html', context)
     pdf_file = HTML(string=html_context).write_pdf()
-
+    color = parse_color('rgba(255, 99, 71, 0.5)')
+    print(color)
     response = HttpResponse(pdf_file, content_type='application/pdf')
     response['Content-Disposition'] = f'filename="lease_{lease.id}.pdf'
     return response
