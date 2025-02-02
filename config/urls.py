@@ -24,6 +24,7 @@ urlpatterns = [
     path('users/', include('apps.users.urls', namespace='users')),
     path('properties/', include('apps.properties.urls', namespace='properties')),
     path('leases/', include('apps.leases.urls', namespace='leases')),
+    path('payments/', include('apps.payments.urls', namespace='payments')),
     path('maintenance/', include('apps.maintenance.urls', namespace='maintenance')),
 ]
 

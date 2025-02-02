@@ -16,4 +16,4 @@ def create_payment(request):
             return redirect('payment_list')
     else:
         form = PaymentForm()
-    return render(request, 'payments/create_payment.html', {'form': form}
+    return render(request, 'payments/create_payment.html', {'form': form})
