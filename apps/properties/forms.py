@@ -1,5 +1,7 @@
 from django import forms
+
 from .models import Property, Unit
+
 
 class PropertyForm(forms.ModelForm):
     class Meta:
@@ -9,4 +11,4 @@ class PropertyForm(forms.ModelForm):
 class UnitForm(forms.ModelForm):
     class Meta:
         model = Unit
-        fields = ['property', 'unt_type', 'rent_price', 'is_furnished', 'before_images']
+        fields = ['property', 'unit_type', 'rent_price', 'is_furnished', 'before_images']
