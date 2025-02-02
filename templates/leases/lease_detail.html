@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% block title %}تفاصيل العقد{% endblock %}
+{% block content %}
+<div class="container">
+  <h2 class="mt-4">تفاصيل العقد الإيجار</h2>
+  <ul class="list-group">
+    <li class="list-group-item"><strong>المستأجر:</strong> {{ lease.tenant.username }}</li>
+    <li class="list-group-item"><strong>الوحدة:</strong> {{ lease.unit.property.name }}</li>
+    <li class="list-group-item"><strong>تاريخ البدء:</strong> {{ lease.start_date }}</li>
+    <li class="list-group-item"><strong>تاريخ الانتهاء:</strong> {{ lease.end_date }}</li>
+    <li class="list-group-item"><strong>رسوم التسجيل:</strong> {{ lease.calculate_registration_fee }} ريال عماني</li>
+  </ul>
+  <a href="{% url 'leases:generate_lease_pdf' lease.id %}" class="btn btn-secondary mt-3">تحميل العقد بصيغة PDF</a>
+</div>
+{% endblock %}

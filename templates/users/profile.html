@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% block title %}ملف الشخصي{% endblock %}
+{% block content %}
+<div class="container">
+  <h2 class="mt-4">ملف الشخصي</h2>
+  <form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="btn btn-primary">تحديث</button
+  </form>
+</div>
+{% endblock %}

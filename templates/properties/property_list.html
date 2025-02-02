@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% block title %}العقارات{% endblock %}
+{% block content %}
+<div class="container">
+  <h2 class="mt-4">قائمة العقارات</h2>
+  <table class="table teble-striped table-bordered">
+    <thead>
+      <tr>
+        <th>اسم العقار</th>
+        <th>العنوان</th>
+        <th>رقم السجل التجاري</th>
+        <th>الحالة</th>
+        <th>الإجراءات</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for property in properties %}
+        <tr>
+          <td>{{ property.name }}</td>
+          <td>{{ property.address }}</td>
+          <td>{{ property.cr_number }}</td>
+          <td>{{ property.get_status_display }}</td>
+          <td>
+            <a href="{% url 'property_detail' property.id %}" class="btn btn-primary">تفاصيل</a>
+          </td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}
