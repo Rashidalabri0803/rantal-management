@@ -8,6 +8,8 @@ from weasyprint import HTML
 from .forms import LeaseForm
 from .models import Lease
 
+color = parse_color('rgba(255, 99, 71, 0.5)')
+print(color)
 
 def lease_list(request):
     leases = Lease.objects.all()
@@ -33,8 +35,6 @@ def generate_lease_pdf(request, lease_id):
     context = {'lease': lease}
     html_context = render_to_string('leases/lease_template.html', context)
     pdf_file = HTML(string=html_context).write_pdf()
-    color = parse_color('rgba(255, 99, 71, 0.5)')
-    print(color)
     response = HttpResponse(pdf_file, content_type='application/pdf')
     response['Content-Disposition'] = f'filename="lease_{lease.id}.pdf'
     return response
