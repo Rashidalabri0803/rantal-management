@@ -16,7 +16,7 @@ def lease_detail(request, lease_id):
     lease = get_object_or_404(Lease, id=lease_id)
     return render(request, 'leases/lease_detail.html', {'lease': lease})
 
-def lease_create(request):
+def create_lease(request):
     if request.method == 'POST':
         form = LeaseForm(request.POST, request.FILES)
         if form.is_valid():
